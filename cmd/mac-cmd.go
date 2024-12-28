@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"log"
 	"os/exec"
 	"strings"
 )
@@ -8,17 +9,25 @@ import (
 type MacCmdManager struct{}
 
 func (this *MacCmdManager) CreateDir(dirName string) error {
-	return nil
+	err := exec.Command("mkdir", dirName).Run()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return err
 }
 
 func (this *MacCmdManager) DeleteDir() error {
 	pwd := this.GetCurrentDir()
 	splitted := strings.Split(pwd, "/")
-	parentDirName := splitted[len(splitted)-1]
+	parentDirName := "../" + splitted[len(splitted)-1]
+
+	log.Println("splitted", splitted)
+	log.Println("parentDirName", parentDirName)
 
 	err := exec.Command("sudo", "rm", "-r", parentDirName).Run()
 	if err != nil {
-		WriteError(err)
+		log.Fatal(err)
 	}
 
 	return err

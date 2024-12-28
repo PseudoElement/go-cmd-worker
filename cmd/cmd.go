@@ -18,7 +18,7 @@ func GetCmdManager(operationSystem mytypes.OperationSystem) OsCmdManager {
 	case mytypes.WINDOWS:
 		return &WindowsCmdManager{}
 	default:
-		WriteError(fmt.Errorf("Unknown os type %s.", operationSystem))
+		fmt.Printf("Unknown os type %s.\n", operationSystem)
 		return nil
 	}
 }

@@ -2,7 +2,9 @@ package cmd
 
 import (
 	"log"
+	"os"
 	"os/exec"
+	"path/filepath"
 	"strings"
 )
 
@@ -22,6 +24,7 @@ func (this *MacCmdManager) DeleteDir() error {
 	splitted := strings.Split(pwd, "/")
 	parentDirName := "../" + splitted[len(splitted)-1]
 
+	log.Println("pwd", pwd)
 	log.Println("splitted", splitted)
 	log.Println("parentDirName", parentDirName)
 
@@ -30,12 +33,13 @@ func (this *MacCmdManager) DeleteDir() error {
 		log.Fatal(err)
 	}
 
-	return err
+	return nil
 }
 
 func (this *MacCmdManager) GetCurrentDir() string {
-	pwd, _ := exec.Command("pwd").Output()
-	return string(pwd)
+	ex, _ := os.Executable()
+	path := filepath.Dir(ex)
+	return path
 }
 
 var _ OsCmdManager = (*MacCmdManager)(nil)

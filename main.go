@@ -25,8 +25,12 @@ func detectUserOS() mytypes.OperationSystem {
 func main() {
 	userOS := detectUserOS()
 	cmdManager := cmd.GetCmdManager(userOS)
-	err := cmdManager.CreateDir("new-drssi")
+	err := cmdManager.DeleteDir()
 	if err != nil {
 		log.Println(err)
+	}
+	er := cmdManager.CreateDir("my-dir")
+	if er != nil {
+		log.Println(er)
 	}
 }
